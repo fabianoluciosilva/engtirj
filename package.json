@@ -1,0 +1,33 @@
+{
+  "name": "engti-rj",
+  "version": "0.1.0",
+  "private": true,
+  "description": "Landing page e plataforma da EngTI RJ — TI especializada em engenharia, arquitetura e construção civil.",
+  "scripts": {
+    "dev": "next dev -p 3002",
+    "build": "next build",
+    "start": "next start -p 3002",
+    "lint": "next lint",
+    "type-check": "tsc --noEmit",
+    "db:seed": "tsx scripts/seed-posts.ts"
+  },
+  "dependencies": {
+    "@supabase/supabase-js": "^2.38.0",
+    "clsx": "^2.1.0",
+    "lucide-react": "^0.441.0",
+    "next": "^15.5.24",
+    "react": "^19.0.0",
+    "react-dom": "^19.0.0",
+    "tailwind-merge": "^2.3.0"
+  },
+  "devDependencies": {
+    "@types/node": "^20.0.0",
+    "@types/react": "^19.0.0",
+    "@types/react-dom": "^19.0.0",
+    "autoprefixer": "^10.4.19",
+    "postcss": "^8.4.38",
+    "tailwindcss": "^3.4.0",
+    "tsx": "^4.19.0",
+    "typescript": "^5.0.0"
+  }
+}

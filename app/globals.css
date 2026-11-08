@@ -1,0 +1,81 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/*
+ * Tokens semânticos — EngTI RJ.
+ * Azul Industrial Deep (primary) + Laranja Construção (accent) sobre neutros
+ * de concreto/prata. Formato "R G B" para permitir opacidade via Tailwind.
+ */
+:root {
+  --radius: 0.625rem;
+
+  --background: 255 255 255;
+  --foreground: 15 23 42;
+
+  /* Azul Engenharia / Industrial Deep */
+  --primary: 15 23 42; /* #0F172A */
+  --primary-foreground: 248 250 252;
+  --primary-soft: 30 41 59;
+
+  /* Laranja Construção */
+  --accent: 234 88 12; /* #EA580C */
+  --accent-foreground: 255 247 237;
+  --accent-soft: 249 115 22; /* #F97316 */
+
+  /* Neutros — Cinza Concreto / Prata Metálico */
+  --muted: 241 245 249; /* #F1F5F9 */
+  --muted-foreground: 71 85 105;
+  --card: 255 255 255;
+  --card-foreground: 15 23 42;
+
+  --border: 226 232 240;
+  --ring: 234 88 12;
+  --steel: 148 163 184; /* #94A3B8 */
+}
+
+@layer base {
+  * {
+    @apply border-border;
+  }
+
+  html {
+    scroll-behavior: smooth;
+    -webkit-text-size-adjust: 100%;
+  }
+
+  body {
+    @apply bg-background text-foreground antialiased;
+    font-feature-settings: 'cv11', 'ss01';
+  }
+
+  ::selection {
+    @apply bg-accent/20 text-foreground;
+  }
+
+  h1,
+  h2,
+  h3 {
+    @apply font-display;
+    text-wrap: balance;
+  }
+
+  p {
+    text-wrap: pretty;
+  }
+}
+
+@layer components {
+  /* Container padrão da landing */
+  .container-page {
+    @apply mx-auto w-full max-w-6xl px-5 sm:px-8;
+  }
+
+  /* Trilha sutil de "grade de engenharia" usada em faixas de destaque */
+  .bg-engineering-grid {
+    background-image:
+      linear-gradient(to right, rgb(var(--steel) / 0.12) 1px, transparent 1px),
+      linear-gradient(to bottom, rgb(var(--steel) / 0.12) 1px, transparent 1px);
+    background-size: 32px 32px;
+  }
+}
