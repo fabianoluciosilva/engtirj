@@ -71,7 +71,7 @@ export function localBusinessSchema() {
         itemOffered: {
           '@type': 'Service',
           name: service.title,
-          description: service.description,
+          description: service.summary,
           serviceType: service.title,
           areaServed: site.areaServed,
           provider: { '@id': `${SITE_URL}/#organization` },

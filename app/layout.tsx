@@ -27,7 +27,7 @@ const mono = JetBrains_Mono({
 export const metadata: Metadata = {
   metadataBase: new URL(SITE_URL),
   title: {
-    default: 'EngTI RJ — Suporte de TI para Engenharia no Rio de Janeiro',
+    default: 'EngTI RJ — TI para Engenharia e Arquitetura no Rio de Janeiro',
     template: '%s | EngTI RJ',
   },
   description: site.description,
@@ -51,22 +51,14 @@ export const metadata: Metadata = {
     locale: 'pt_BR',
     url: SITE_URL,
     siteName: site.name,
-    title: 'EngTI RJ — TI especializada para engenharia, arquitetura e construção civil',
+    title: 'EngTI RJ — TI para engenharia, arquitetura e construção civil no Rio de Janeiro',
     description: site.description,
-    images: [
-      {
-        url: '/og-image.png',
-        width: 1200,
-        height: 630,
-        alt: 'EngTI RJ — TI especializada para engenharia no Rio de Janeiro',
-      },
-    ],
+    // A imagem vem de app/opengraph-image.tsx (convenção de arquivo do Next).
   },
   twitter: {
     card: 'summary_large_image',
-    title: 'EngTI RJ — TI especializada para engenharia no Rio de Janeiro',
+    title: 'EngTI RJ — TI para engenharia no Rio de Janeiro',
     description: site.description,
-    images: ['/og-image.png'],
   },
   robots: {
     index: true,

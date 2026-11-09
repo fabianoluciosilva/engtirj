@@ -23,12 +23,28 @@ export function whatsappUrl(message: string = WHATSAPP_MESSAGE): string {
 /** URL canônica do site (sem barra final). */
 export const SITE_URL = (process.env.NEXT_PUBLIC_SITE_URL ?? 'https://engtirj.com.br').replace(/\/+$/, '')
 
+/**
+ * Data da última alteração relevante de conteúdo das páginas estáticas
+ * (usada no sitemap). Atualize ao mudar textos das páginas.
+ */
+export const SITE_UPDATED_AT = '2026-11-09'
+
+export type ServiceIcon = 'server' | 'wifi' | 'shield' | 'key'
+
+export interface SiteService {
+  slug: string
+  title: string
+  /** Uma frase (até 160 caracteres) — cartões, menu, meta e llms.txt. */
+  summary: string
+  icon: ServiceIcon
+}
+
 export const site = {
   name: 'EngTI RJ',
   legalName: 'EngTI RJ — Soluções de TI para Engenharia',
-  tagline: 'TI especializada para engenharia, arquitetura e construção civil no Rio de Janeiro',
+  tagline: 'TI para engenharia, arquitetura e construção civil no Rio de Janeiro',
   description:
-    'Suporte de TI especializado para empresas de engenharia, arquitetura e construção civil no Rio de Janeiro. Servidores e storages para AutoCAD, Revit e BIM, redes para canteiros de obras, backup em nuvem e proteção contra ransomware.',
+    'TI para empresas de engenharia, arquitetura e construção civil no Rio de Janeiro: servidores e storage para AutoCAD, Revit e BIM, redes para canteiros de obras, backup em nuvem e proteção contra ransomware.',
   locale: 'pt-BR',
   state: 'RJ',
   region: 'Rio de Janeiro',
@@ -36,14 +52,21 @@ export const site = {
   country: 'BR',
   areaServed: 'Rio de Janeiro, RJ',
   /**
-   * Modelo de atendimento: a EngTI RJ atende em todo o estado do Rio de
-   * Janeiro, de forma remota e in-loco na empresa do cliente. Não há endereço
-   * de rua público divulgado (operação remota/in-loco) — por isso o JSON-LD
-   * usa areaServed em vez de streetAddress, o que é válido para negócios de
-   * serviço local. Se houver endereço comercial, preencha `address.street` e
-   * `address.postalCode` abaixo.
+   * Modelo de atendimento: todo o estado do Rio de Janeiro, de forma remota e
+   * in-loco na empresa do cliente. Não há endereço de rua público divulgado —
+   * por isso o JSON-LD usa areaServed em vez de streetAddress. Se houver
+   * endereço comercial, preencha `address.street` e `address.postalCode`.
    */
-  coverage: 'Atendimento em todo o Rio de Janeiro — remoto e in-loco',
+  coverage: 'Atendimento em todo o estado do Rio de Janeiro — remoto e in-loco',
+  regions: [
+    'Rio de Janeiro (capital)',
+    'Niterói',
+    'Baixada Fluminense',
+    'Região Serrana',
+    'Região dos Lagos',
+    'Sul Fluminense',
+    'interior do estado',
+  ],
   address: {
     street: '' as string,
     city: 'Rio de Janeiro',
@@ -55,47 +78,49 @@ export const site = {
     latitude: -22.9068,
     longitude: -43.1729,
   },
-  // E-mail e telefone: telefone exibido = número comercial do WhatsApp.
   email: 'contato@engtirj.com.br',
   phone: '+55 21 4042-1350',
   phoneE164: '+552140421350',
   openingHours: 'Mo-Fr 08:00-18:00',
-  /**
-   * Serviços especializados — usados na seção de serviços, no JSON-LD
-   * ProfessionalService (`hasOfferCatalog`) e nos direct-answer blocks de GEO.
-   */
+  /** Perfis sociais reais (URLs). Vazio até serem informados — alimenta `sameAs`. */
+  social: [] as string[],
   services: [
     {
       slug: 'servidores-storage-cad-bim',
-      title: 'Servidores e Storages para Projetos 3D / CAD / BIM',
-      description:
-        'Infraestrutura de servidores de arquivos e storage de alta performance (NAS/SAN/SSD) dimensionada para abrir e salvar projetos pesados de AutoCAD, Revit e BIM em rede, sem travamentos e com acesso simultâneo de toda a equipe.',
+      title: 'Servidores e storage para CAD e BIM',
+      summary:
+        'Servidor de arquivos e storage NAS/SSD dimensionados para abrir e salvar modelos de AutoCAD, Revit e BIM em rede, com a equipe toda trabalhando junta.',
+      icon: 'server',
     },
     {
       slug: 'redes-canteiros-obras',
-      title: 'Conectividade e Redes para Canteiros de Obras',
-      description:
-        'Redes cabeadas e Wi-Fi industrial robustas, link de internet redundante (fibra + 4G/5G) e acesso remoto seguro para canteiros de obras e escritórios de engenharia, garantindo upload de projetos e comunicação com a obra.',
+      title: 'Redes e internet para canteiros de obras',
+      summary:
+        'Cabeamento, Wi-Fi para obra e link duplo (fibra + 4G/5G) com troca automática, para o canteiro enviar e receber projetos sem ficar offline.',
+      icon: 'wifi',
     },
     {
       slug: 'backup-ransomware',
-      title: 'Backup em Nuvem e Imunização contra Ransomware',
-      description:
-        'Estratégia de backup 3-2-1 com cópias imutáveis e offsite para arquivos de projetos e pranchas, detecção e contenção de ransomware e plano de continuidade para não perder anos de projetos.',
+      title: 'Backup em nuvem e proteção contra ransomware',
+      summary:
+        'Backup 3-2-1 com cópia imutável fora do escritório, para recuperar pranchas e modelos mesmo depois de um ataque.',
+      icon: 'shield',
     },
     {
       slug: 'licenciamento-softwares-tecnicos',
-      title: 'Gestão de Licenciamento de Softwares Técnicos',
-      description:
-        'Gestão de licenças Autodesk (Revit, AutoCAD, Civil 3D), Microsoft 365, plataformas BIM e softwares de cálculo, com controle de custos, conformidade e otimização de renovações.',
+      title: 'Gestão de licenças de software técnico',
+      summary:
+        'Controle de licenças Autodesk, Microsoft 365 e plataformas BIM: renovações no prazo, custo sob controle e conformidade.',
+      icon: 'key',
     },
-  ],
+  ] satisfies SiteService[],
   /** CTAs reutilizados em várias seções. */
   cta: {
-    primary: 'Solicitar diagnóstico de TI gratuito',
-    secondary: 'Falar no WhatsApp',
-    services: 'Ver serviços especializados',
+    primary: 'Pedir diagnóstico gratuito',
+    services: 'Conhecer os serviços',
   },
-} as const
+}
 
-export type SiteService = (typeof site.services)[number]
+export function getService(slug: string): SiteService | undefined {
+  return site.services.find((s) => s.slug === slug)
+}

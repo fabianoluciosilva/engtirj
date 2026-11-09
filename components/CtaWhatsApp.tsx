@@ -1,6 +1,6 @@
 import { MessageCircle, ArrowRight } from 'lucide-react'
 import { ButtonAnchor, ButtonLink } from './Button'
-import { whatsappUrl } from '@/lib/site'
+import { site, whatsappUrl } from '@/lib/site'
 import { cn } from '@/lib/cn'
 
 /**
@@ -8,10 +8,10 @@ import { cn } from '@/lib/cn'
  * mantendo a tag [engti].
  */
 export function CtaWhatsApp({
-  label = 'Solicitar diagnóstico de TI gratuito',
+  label = site.cta.primary,
   message,
   secondaryHref = '#servicos',
-  secondaryLabel = 'Ver serviços especializados',
+  secondaryLabel = site.cta.services,
   className,
   align = 'start',
 }: {

@@ -27,7 +27,7 @@ export function WhatsAppFloat() {
         visible ? 'translate-y-0 opacity-100' : 'pointer-events-none translate-y-4 opacity-0'
       }`}
     >
-      <div className="mb-1 hidden max-w-[230px] rounded-xl border border-border/70 bg-card/90 p-3.5 text-xs text-card-foreground shadow-lift backdrop-blur-xl sm:block">
+      <div className="plate mb-1 hidden max-w-[230px] p-3.5 text-xs text-card-foreground shadow-xl shadow-black/40 sm:block">
         <button
           type="button"
           onClick={() => setDismissed(true)}
@@ -37,9 +37,9 @@ export function WhatsAppFloat() {
           <X className="h-3.5 w-3.5" />
         </button>
         <p className="pr-3 leading-relaxed">
-          <strong className="text-white">Projetos travando?</strong>
+          <strong className="text-white">Projeto travando?</strong>
           <br />
-          Fale com um especialista em TI para engenharia.
+          Conte o que está acontecendo e respondemos pelo WhatsApp.
         </p>
       </div>
 

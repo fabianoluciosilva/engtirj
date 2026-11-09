@@ -1,10 +1,11 @@
 import { SiteHeader } from '@/components/SiteHeader'
 import { SiteFooter } from '@/components/SiteFooter'
 import { Hero } from '@/components/sections/Hero'
-import { PainPoints } from '@/components/sections/PainPoints'
+import { Symptoms } from '@/components/sections/Symptoms'
 import { Services } from '@/components/sections/Services'
-import { GeoAnswers } from '@/components/sections/GeoAnswers'
+import { HowItWorks } from '@/components/sections/HowItWorks'
 import { Faq } from '@/components/sections/Faq'
+import { About } from '@/components/sections/About'
 import { BlogPreview } from '@/components/sections/BlogPreview'
 import { WhatsAppFloat } from '@/components/WhatsAppButton'
 import { JsonLd, localBusinessSchema, faqPageSchema } from '@/components/JsonLd'
@@ -19,10 +20,11 @@ export default function HomePage() {
       <SiteHeader />
       <main>
         <Hero />
-        <PainPoints />
+        <Symptoms />
         <Services />
-        <GeoAnswers />
+        <HowItWorks />
         <Faq />
+        <About />
         <BlogPreview />
       </main>
       <SiteFooter />

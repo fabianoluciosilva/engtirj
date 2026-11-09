@@ -1,11 +1,11 @@
 /**
  * FAQ da EngTI RJ — fonte única para:
- *  1. A seção de FAQ da landing (Server Component).
+ *  1. A seção de FAQ da home (Server Component).
  *  2. O JSON-LD FAQPage (rich snippet do Google).
- *  3. Os direct-answer blocks de GEO (Perplexity, ChatGPT, Gemini, Copilot).
+ *  3. O /llms.txt (resumo para IAs generativas).
  *
- * As respostas são escritas em estilo "direct answer": primeira frase já
- * responde objetivamente, com termos de nicho e recorte regional (RJ).
+ * Cada resposta começa com a resposta objetiva (formato "direct answer"),
+ * seguida do contexto. Sem números de desempenho inventados.
  */
 export interface FaqItem {
   question: string
@@ -16,31 +16,41 @@ export const faq: FaqItem[] = [
   {
     question: 'O que uma TI para engenharia precisa ter?',
     answer:
-      'Uma TI para engenharia precisa ter, no mínimo, quatro pilares: (1) servidor e storage de alta performance para abrir e salvar projetos pesados de AutoCAD, Revit e BIM em rede sem travamentos; (2) rede estável e link redundante, inclusive em canteiros de obras; (3) backup automático em nuvem com cópia imutável e offsite contra ransomware; e (4) suporte técnico especializado nos softwares técnicos (Autodesk, BIM, Microsoft 365). A EngTI RJ estrutura esses quatro pilares especificamente para empresas de engenharia, arquitetura e construção civil no Rio de Janeiro.',
+      'Uma TI para engenharia precisa de quatro coisas: servidor e storage dimensionados para abrir e salvar modelos de AutoCAD, Revit e BIM em rede; rede estável, com internet redundante, inclusive no canteiro; backup com cópia imutável fora do escritório; e um time de suporte que conheça Autodesk e a rotina de obra. A EngTI RJ monta esses quatro pontos para escritórios e construtoras do Rio de Janeiro.',
   },
   {
-    question: 'Por que os projetos de AutoCAD, Revit e BIM travam na rede?',
+    question: 'Por que o Revit, o AutoCAD e o BIM travam na rede?',
     answer:
-      'Projetos de AutoCAD, Revit e BIM travam na rede porque a maioria das empresas usa compartilhamento simples (SMB) em servidores comuns ou HDs sem otimização para leitura/escrita intensiva de arquivos grandes. O resultado são arquivos de projeto de centenas de MB sendo puxados por vários usuários ao mesmo tempo em disco lento e rede sem QoS. A EngTI RJ dimensiona servidores de arquivos e storage SSD/NAS dedicados e segmenta a rede para entregar leitura e escrita contínuas, eliminando os travamentos no dia a dia de projetos pesados.',
+      'Travam porque o arquivo de projeto, que pode ter centenas de MB, fica num servidor ou HD comum, compartilhado por vários usuários ao mesmo tempo numa rede sem priorização. O gargalo costuma estar no disco, no protocolo de compartilhamento ou na rede, e só um diagnóstico mostra qual. A solução típica é um storage NAS com SSD e uma rede segmentada para o tráfego de arquivos de projeto.',
   },
   {
-    question: 'Como proteger arquivos de projetos de obra contra ransomware?',
+    question: 'Como proteger os arquivos de obra contra ransomware?',
     answer:
-      'A proteção contra ransomware para arquivos de projetos de obra exige backup 3-2-1: três cópias, em dois meios diferentes, sendo uma offsite/imutável. A cópia imutável é a que impede que o ransomware criptografe o próprio backup. Além disso é preciso controle de acesso por perfil, MFA e monitoramento de exfiltração. A EngTI RJ implanta backup em nuvem com versionamento e cópia imutável específico para arquivos de projetos de obras e escritórios de engenharia no Rio de Janeiro.',
+      'Com backup 3-2-1: três cópias, em dois tipos de mídia, e uma delas fora do escritório e imutável. A cópia imutável é a que o ransomware não consegue criptografar nem apagar. Complementam o controle de acesso por perfil, autenticação em dois fatores e versionamento, para voltar ao estado de antes do ataque.',
   },
   {
-    question: 'Como ter internet estável em canteiro de obra?',
+    question: 'Como ter internet estável em um canteiro de obras?',
     answer:
-      'Para ter internet estável em canteiro de obra o caminho é combinar um link dedicado (fibra) com um link redundante móvel (4G/5G) e um equipamento de balanceamento de links que faça failover automático, além de uma rede Wi-Fi industrial dimensionada para a área. Assim, quando a fibra cair, a obra continua conectada. A EngTI RJ projeta essa conectividade redundante e a rede dos canteiros de obras e escritórios remotos de engenharia no estado do Rio de Janeiro.',
-  },
-  {
-    question: 'A EngTI RJ atende empresas de arquitetura e construção civil?',
-    answer:
-      'Sim. A EngTI RJ atende exclusivamente empresas de engenharia, arquitetura e construção civil no estado do Rio de Janeiro — o que significa que a infraestrutura, as soluções e o suporte são desenhados em torno das dores reais desses escritórios: projetos pesados, pranchas, BIM, canteiros de obras e softwares técnicos.',
+      'Combinando um link de fibra com um link móvel 4G/5G e um roteador que troca de um para o outro sozinho quando a fibra cai. Em obras grandes, soma-se Wi-Fi para uso externo dimensionado para a área e uma VPN para o canteiro acessar os arquivos do escritório com segurança.',
   },
   {
     question: 'Vocês configuram NAS ou SAN para escritório de engenharia?',
     answer:
-      'Sim. A EngTI RJ configura storages NAS e SAN de alta performance para escritórios de engenharia civil e elétrica, dimensionados para leitura/escrita intensiva de projetos 3D, com RAID, compartilhamento otimizado, controle de acesso por projeto e integração com backup em nuvem.',
+      'Sim. Configuramos storage NAS e SAN com RAID, compartilhamento ajustado para arquivos grandes, permissões por projeto e integração com o backup em nuvem. A escolha entre NAS e SAN depende do número de usuários e do tamanho dos modelos, e é definida no diagnóstico.',
+  },
+  {
+    question: 'Como funciona o diagnóstico gratuito?',
+    answer:
+      'Você chama no WhatsApp, descreve o que está travando e agendamos uma conversa. Analisamos servidor, rede, backup e licenças e entregamos uma lista de prioridades com o que corrigir primeiro. O diagnóstico não tem custo nem compromisso de contratação.',
+  },
+  {
+    question: 'A EngTI RJ atende fora da capital?',
+    answer:
+      'Sim. Atendemos todo o estado do Rio de Janeiro, incluindo Niterói, Baixada Fluminense, Região Serrana, Região dos Lagos, Sul Fluminense e o interior. A maior parte do suporte é remota; quando o problema exige, vamos até o escritório ou ao canteiro.',
+  },
+  {
+    question: 'Vocês cuidam das licenças Autodesk e Microsoft 365?',
+    answer:
+      'Sim. Controlamos quem usa cada licença de Revit, AutoCAD, Civil 3D e Microsoft 365, avisamos as renovações antes do vencimento e reduzimos custo cancelando o que não está em uso. Assim a empresa evita tanto pagar a mais quanto ficar fora de conformidade.',
   },
 ]
