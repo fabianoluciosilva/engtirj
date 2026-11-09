@@ -67,7 +67,6 @@ export default async function PostPage({ params }: { params: Promise<{ slug: str
 
       <SiteHeader />
       <main className="relative">
-        <div className="pointer-events-none absolute inset-x-0 top-0 h-72 bg-hero-glow opacity-60" aria-hidden />
         <div className="container-page relative py-12 lg:py-16">
           <div className="mx-auto max-w-3xl">
             <nav className="flex items-center gap-1.5 text-xs text-muted-foreground" aria-label="Trilha">
@@ -78,11 +77,9 @@ export default async function PostPage({ params }: { params: Promise<{ slug: str
 
             <header className="mt-5">
               {post.category && (
-                <span className="inline-flex w-fit rounded-full border border-accent/25 bg-accent/10 px-2.5 py-0.5 text-xs font-semibold uppercase tracking-wide text-accent">
-                  {post.category}
-                </span>
+                <span className="cota w-fit">{post.category}</span>
               )}
-              <h1 className="mt-3 font-display text-3xl font-bold leading-tight tracking-tight text-white sm:text-4xl">
+              <h1 className="mt-3 font-display text-4xl font-bold leading-tight tracking-tight text-white sm:text-5xl">
                 {post.title}
               </h1>
               {post.meta_description && (
@@ -106,7 +103,7 @@ export default async function PostPage({ params }: { params: Promise<{ slug: str
                 src={post.cover_url}
                 alt={post.title}
                 loading="lazy"
-                className="mt-6 w-full rounded-2xl border border-border/70 object-cover"
+                className="mt-6 w-full rounded border border-line/20 object-cover"
               />
             )}
 
@@ -114,7 +111,7 @@ export default async function PostPage({ params }: { params: Promise<{ slug: str
               <Markdown content={post.content_md ?? ''} />
             </article>
 
-            <div className="card-future mt-12 p-7">
+            <div className="plate mt-12 p-7">
               <h2 className="font-display text-xl font-semibold text-white">
                 Quer resolver isso na sua empresa?
               </h2>

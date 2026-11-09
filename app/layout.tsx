@@ -1,5 +1,5 @@
 import type { Metadata, Viewport } from 'next'
-import { Geist, Sora, JetBrains_Mono } from 'next/font/google'
+import { Geist, Big_Shoulders_Display, JetBrains_Mono } from 'next/font/google'
 import './globals.css'
 import { site, SITE_URL } from '@/lib/site'
 
@@ -9,11 +9,11 @@ const geist = Geist({
   display: 'swap',
 })
 
-// Sora — display geométrica, transmite precisão técnica nos títulos.
-const sora = Sora({
+// Big Shoulders Display — condensada, remete a placa de obra e prancha técnica.
+const display = Big_Shoulders_Display({
   variable: '--font-display',
   subsets: ['latin'],
-  weight: ['600', '700', '800'],
+  weight: ['700', '800'],
   display: 'swap',
 })
 
@@ -91,13 +91,13 @@ export const metadata: Metadata = {
 export const viewport: Viewport = {
   width: 'device-width',
   initialScale: 1,
-  themeColor: '#060A16',
+  themeColor: '#0A1B33',
   colorScheme: 'dark',
 }
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
-    <html lang="pt-BR" className={`${geist.variable} ${sora.variable} ${mono.variable}`}>
+    <html lang="pt-BR" className={`${geist.variable} ${display.variable} ${mono.variable}`}>
       <body>{children}</body>
     </html>
   )
