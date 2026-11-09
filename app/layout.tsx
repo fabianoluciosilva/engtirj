@@ -1,5 +1,5 @@
 import type { Metadata, Viewport } from 'next'
-import { Geist, Big_Shoulders_Display, JetBrains_Mono } from 'next/font/google'
+import { Geist, Big_Shoulders, JetBrains_Mono } from 'next/font/google'
 import './globals.css'
 import { site, SITE_URL } from '@/lib/site'
 
@@ -9,8 +9,8 @@ const geist = Geist({
   display: 'swap',
 })
 
-// Big Shoulders Display — condensada, remete a placa de obra e prancha técnica.
-const display = Big_Shoulders_Display({
+// Big Shoulders — condensada, remete a placa de obra e prancha técnica.
+const display = Big_Shoulders({
   variable: '--font-display',
   subsets: ['latin'],
   weight: ['700', '800'],
