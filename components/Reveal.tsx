@@ -4,9 +4,11 @@ import { useEffect, useRef, useState, type ReactNode, type ElementType } from 'r
 import { cn } from '@/lib/cn'
 
 /**
- * Reveal — anima a entrada do conteúdo quando ele entra na viewport
- * (IntersectionObserver). Respeita prefers-reduced-motion via CSS.
- * `delay` (ms) permite escalonar itens de uma grade.
+ * Reveal — suaviza a entrada (opacidade) de blocos que estão abaixo da dobra.
+ * O conteúdo é renderizado visível no servidor e sem JavaScript; só depois de
+ * montar, o que ainda não está na tela é escondido e revelado ao entrar na
+ * viewport. Assim o texto nunca depende do script para existir. Respeita
+ * prefers-reduced-motion via CSS. `delay` (ms) escalona itens de uma grade.
  */
 export function Reveal({
   children,
@@ -20,16 +22,20 @@ export function Reveal({
   className?: string
 }) {
   const ref = useRef<HTMLElement | null>(null)
-  const [visible, setVisible] = useState(false)
+  const [state, setState] = useState<'shown' | 'hidden' | 'revealed'>('shown')
 
   useEffect(() => {
     const el = ref.current
     if (!el) return
+    const rect = el.getBoundingClientRect()
+    if (rect.top < window.innerHeight * 0.92) return // já visível: não anima
+
+    setState('hidden')
     const io = new IntersectionObserver(
       (entries) => {
         entries.forEach((entry) => {
           if (entry.isIntersecting) {
-            setVisible(true)
+            setState('revealed')
             io.unobserve(entry.target)
           }
         })
@@ -43,8 +49,8 @@ export function Reveal({
   return (
     <Tag
       ref={ref as never}
-      className={cn('reveal', visible && 'is-visible', className)}
-      style={{ transitionDelay: `${delay}ms` }}
+      className={cn(state !== 'shown' && 'reveal', state === 'revealed' && 'is-visible', className)}
+      style={state === 'shown' ? undefined : { transitionDelay: `${delay}ms` }}
     >
       {children}
     </Tag>

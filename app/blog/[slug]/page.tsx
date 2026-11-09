@@ -7,7 +7,7 @@ import { SiteFooter } from '@/components/SiteFooter'
 import { WhatsAppFloat } from '@/components/WhatsAppButton'
 import { Markdown } from '@/components/Markdown'
 import { CtaWhatsApp } from '@/components/CtaWhatsApp'
-import { JsonLd, blogPostingSchema, breadcrumbSchema, localBusinessSchema } from '@/components/JsonLd'
+import { JsonLd, blogPostingSchema, breadcrumbSchema, graph, organizationNode, websiteNode } from '@/components/JsonLd'
 import { getPostBySlug, listPublishedSlugs } from '@/lib/posts'
 import { SITE_URL, site } from '@/lib/site'
 
@@ -55,7 +55,7 @@ export default async function PostPage({ params }: { params: Promise<{ slug: str
 
   return (
     <>
-      <JsonLd data={localBusinessSchema()} />
+      <JsonLd data={graph(organizationNode(), websiteNode())} />
       <JsonLd data={blogPostingSchema(post)} />
       <JsonLd
         data={breadcrumbSchema([
@@ -119,7 +119,7 @@ export default async function PostPage({ params }: { params: Promise<{ slug: str
                 A EngTI RJ faz um diagnóstico gratuito da infraestrutura da sua empresa de engenharia
                 no Rio de Janeiro.
               </p>
-              <CtaWhatsApp className="mt-5" secondaryHref="/servicos" secondaryLabel="Ver serviços" />
+              <CtaWhatsApp className="mt-5" secondaryHref="/#servicos" secondaryLabel="Ver serviços" />
             </div>
 
             <div className="mt-8">

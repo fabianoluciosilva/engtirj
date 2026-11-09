@@ -15,6 +15,7 @@ const display = Big_Shoulders({
   subsets: ['latin'],
   weight: ['700', '800'],
   display: 'swap',
+  adjustFontFallback: false,
 })
 
 const mono = JetBrains_Mono({

@@ -90,3 +90,24 @@ export async function listPublishedSlugs(): Promise<string[]> {
   }
   return (data ?? []).map((row) => (row as { slug: string }).slug)
 }
+
+/** Posts publicados de uma ou mais categorias — artigos relacionados nas páginas de serviço. */
+export async function getPostsByCategories(categories: string[], limit = 3): Promise<Post[]> {
+  if (categories.length === 0) return []
+  const supabase = getPublicClient()
+  if (!supabase) return []
+
+  const { data, error } = await supabase
+    .from('posts')
+    .select('*')
+    .eq('is_published', true)
+    .in('category', categories)
+    .order('published_at', { ascending: false, nullsFirst: false })
+    .limit(limit)
+
+  if (error) {
+    console.error('[posts] getPostsByCategories', error.message)
+    return []
+  }
+  return (data ?? []) as Post[]
+}

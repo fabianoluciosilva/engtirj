@@ -1,18 +1,29 @@
-import { site, SITE_URL } from '@/lib/site'
+import { site, SITE_URL, type SiteService } from '@/lib/site'
 import { faq } from '@/lib/faq'
 
 /**
  * Dados estruturados Schema.org (JSON-LD).
  * Helpers puros que devolvem objetos; o componente <JsonLd> injeta via
- * <script type="application/ld+json">.
+ * <script type="application/ld+json">. Os nós se ligam por `@id`.
  */
 
 const LOGO_URL = `${SITE_URL}/logo-engti-rj.svg`
+export const ORGANIZATION_ID = `${SITE_URL}/#organization`
+export const WEBSITE_ID = `${SITE_URL}/#website`
 
-/** LocalBusiness + ProfessionalService completos, com foco regional (RJ). */
-export function localBusinessSchema() {
-  // Endereço de rua só entra no schema se estiver preenchido — evita emitir
-  // streetAddress/postalCode vazios. Atendimento é remoto + in-loco em todo RJ.
+type Node = Record<string, unknown>
+
+/** Junta nós em um único bloco `@graph`. */
+export function graph(...nodes: Node[]): Node {
+  return {
+    '@context': 'https://schema.org',
+    '@graph': nodes.map(({ '@context': _ctx, ...rest }) => rest),
+  }
+}
+
+/** Organização + negócio local de serviço, com atendimento no estado do RJ. */
+export function organizationNode(): Node {
+  // Endereço de rua só entra no schema se estiver preenchido.
   const hasStreet = Boolean(site.address.street && site.address.postalCode)
   const address = hasStreet
     ? {
@@ -31,9 +42,8 @@ export function localBusinessSchema() {
       }
 
   return {
-    '@context': 'https://schema.org',
-    '@type': ['LocalBusiness', 'ProfessionalService'],
-    '@id': `${SITE_URL}/#organization`,
+    '@type': ['Organization', 'ProfessionalService'],
+    '@id': ORGANIZATION_ID,
     name: site.name,
     legalName: site.legalName,
     description: site.description,
@@ -42,7 +52,6 @@ export function localBusinessSchema() {
     image: LOGO_URL,
     telephone: site.phoneE164,
     email: site.email,
-    priceRange: '$$',
     areaServed: {
       '@type': 'State',
       name: 'Rio de Janeiro',
@@ -62,20 +71,13 @@ export function localBusinessSchema() {
         closes: '18:00',
       },
     ],
-    sameAs: [] as string[],
+    ...(site.social.length > 0 ? { sameAs: [...site.social] } : {}),
     hasOfferCatalog: {
       '@type': 'OfferCatalog',
-      name: 'Serviços de TI especializada para engenharia',
+      name: 'Serviços de TI para engenharia',
       itemListElement: site.services.map((service) => ({
         '@type': 'Offer',
-        itemOffered: {
-          '@type': 'Service',
-          name: service.title,
-          description: service.summary,
-          serviceType: service.title,
-          areaServed: site.areaServed,
-          provider: { '@id': `${SITE_URL}/#organization` },
-        },
+        itemOffered: serviceNode(service),
       })),
     },
     knowsAbout: [
@@ -89,8 +91,33 @@ export function localBusinessSchema() {
   }
 }
 
+export function websiteNode(): Node {
+  return {
+    '@type': 'WebSite',
+    '@id': WEBSITE_ID,
+    url: SITE_URL,
+    name: site.name,
+    inLanguage: 'pt-BR',
+    publisher: { '@id': ORGANIZATION_ID },
+  }
+}
+
+/** Serviço prestado pela organização (usado no catálogo e nas páginas de serviço). */
+export function serviceNode(service: SiteService): Node {
+  return {
+    '@type': 'Service',
+    '@id': `${SITE_URL}/servicos/${service.slug}#service`,
+    name: service.title,
+    description: service.summary,
+    serviceType: service.title,
+    url: `${SITE_URL}/servicos/${service.slug}`,
+    areaServed: { '@type': 'State', name: 'Rio de Janeiro' },
+    provider: { '@id': ORGANIZATION_ID },
+  }
+}
+
 /** FAQPage — habilita rich snippet de perguntas/respostas no Google. */
-export function faqPageSchema(items: { question: string; answer: string }[] = faq) {
+export function faqPageSchema(items: { question: string; answer: string }[] = faq): Node {
   return {
     '@context': 'https://schema.org',
     '@type': 'FAQPage',
@@ -105,8 +132,8 @@ export function faqPageSchema(items: { question: string; answer: string }[] = fa
   }
 }
 
-/** BreadcrumbList — para /blog e /blog/[slug]. */
-export function breadcrumbSchema(items: { name: string; url: string }[]) {
+/** BreadcrumbList — para /blog, /blog/[slug] e /servicos/[slug]. */
+export function breadcrumbSchema(items: { name: string; url: string }[]): Node {
   return {
     '@context': 'https://schema.org',
     '@type': 'BreadcrumbList',
@@ -126,7 +153,7 @@ export function blogPostingSchema(post: {
   meta_description: string | null
   published_at: string | null
   cover_url: string | null
-}) {
+}): Node {
   const url = `${SITE_URL}/blog/${post.slug}`
   return {
     '@context': 'https://schema.org',
@@ -138,12 +165,8 @@ export function blogPostingSchema(post: {
     datePublished: post.published_at ?? undefined,
     dateModified: post.published_at ?? undefined,
     url,
-    author: { '@type': 'Organization', name: site.name, url: SITE_URL },
-    publisher: {
-      '@type': 'Organization',
-      name: site.name,
-      logo: { '@type': 'ImageObject', url: LOGO_URL },
-    },
+    author: { '@id': ORGANIZATION_ID },
+    publisher: { '@id': ORGANIZATION_ID },
     inLanguage: 'pt-BR',
   }
 }
@@ -153,7 +176,7 @@ export function JsonLd({ data }: { data: Record<string, unknown> }) {
   return (
     <script
       type="application/ld+json"
-      dangerouslySetInnerHTML={{ __html: JSON.stringify(data) }}
+      dangerouslySetInnerHTML={{ __html: JSON.stringify(data).replace(/</g, '\\u003c') }}
     />
   )
 }

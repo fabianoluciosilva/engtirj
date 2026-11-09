@@ -8,13 +8,13 @@ import { Faq } from '@/components/sections/Faq'
 import { About } from '@/components/sections/About'
 import { BlogPreview } from '@/components/sections/BlogPreview'
 import { WhatsAppFloat } from '@/components/WhatsAppButton'
-import { JsonLd, localBusinessSchema, faqPageSchema } from '@/components/JsonLd'
+import { JsonLd, graph, organizationNode, websiteNode, faqPageSchema } from '@/components/JsonLd'
 
 export default function HomePage() {
   return (
     <>
       {/* Dados estruturados globais da landing */}
-      <JsonLd data={localBusinessSchema()} />
+      <JsonLd data={graph(organizationNode(), websiteNode())} />
       <JsonLd data={faqPageSchema()} />
 
       <SiteHeader />

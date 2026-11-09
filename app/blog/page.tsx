@@ -4,7 +4,7 @@ import { ArrowRight, Calendar } from 'lucide-react'
 import { SiteHeader } from '@/components/SiteHeader'
 import { SiteFooter } from '@/components/SiteFooter'
 import { WhatsAppFloat } from '@/components/WhatsAppButton'
-import { JsonLd, breadcrumbSchema, localBusinessSchema } from '@/components/JsonLd'
+import { JsonLd, breadcrumbSchema, graph, organizationNode, websiteNode } from '@/components/JsonLd'
 import { listPublishedPosts, POSTS_PAGE_SIZE } from '@/lib/posts'
 import { SITE_URL } from '@/lib/site'
 import { Reveal } from '@/components/Reveal'
@@ -35,7 +35,7 @@ export default async function BlogPage({
 
   return (
     <>
-      <JsonLd data={localBusinessSchema()} />
+      <JsonLd data={graph(organizationNode(), websiteNode())} />
       <JsonLd data={breadcrumbSchema([{ name: 'Início', url: SITE_URL }, { name: 'Blog', url: `${SITE_URL}/blog` }])} />
 
       <SiteHeader />

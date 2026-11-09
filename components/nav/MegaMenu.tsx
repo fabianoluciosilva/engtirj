@@ -22,6 +22,7 @@ export function MegaMenu({
   const wrapRef = useRef<HTMLDivElement>(null)
   const buttonRef = useRef<HTMLButtonElement | null>(null)
   const closeTimer = useRef<ReturnType<typeof setTimeout> | null>(null)
+  const openedByHover = useRef(false)
   const panelId = useId()
 
   const setButton = (node: HTMLButtonElement | null) => {
@@ -35,7 +36,10 @@ export function MegaMenu({
   }
   const scheduleClose = () => {
     cancelClose()
-    closeTimer.current = setTimeout(() => setOpen(false), 140)
+    closeTimer.current = setTimeout(() => {
+      openedByHover.current = false
+      setOpen(false)
+    }, 140)
   }
 
   useEffect(() => {
@@ -65,6 +69,7 @@ export function MegaMenu({
       className="relative"
       onMouseEnter={() => {
         cancelClose()
+        if (!open) openedByHover.current = true
         setOpen(true)
       }}
       onMouseLeave={scheduleClose}
@@ -77,7 +82,14 @@ export function MegaMenu({
         type="button"
         aria-expanded={open}
         aria-controls={panelId}
-        onClick={() => setOpen((v) => !v)}
+        onClick={() => {
+          // O hover já abriu o painel; o clique que vem junto não deve fechá-lo.
+          if (openedByHover.current) {
+            openedByHover.current = false
+            return
+          }
+          setOpen((v) => !v)
+        }}
         className={cn(
           'inline-flex items-center gap-1.5 px-3.5 py-2 text-sm font-medium transition-colors',
           active || open ? 'text-white' : 'text-muted-foreground hover:text-white',
@@ -92,7 +104,7 @@ export function MegaMenu({
         hidden={!open}
         className="absolute left-1/2 top-full z-50 w-[40rem] -translate-x-1/2 pt-3"
       >
-        <div className="plate grid grid-cols-2 gap-px overflow-hidden bg-line/20 p-0 shadow-2xl shadow-black/40">
+        <div className="plate grid grid-cols-2 overflow-hidden !bg-background p-0 shadow-2xl shadow-black/40">
           {site.services.map((service) => {
             const Icon = serviceIcons[service.icon]
             return (
@@ -100,7 +112,7 @@ export function MegaMenu({
                 key={service.slug}
                 href={`/servicos/${service.slug}`}
                 onClick={() => setOpen(false)}
-                className="group flex gap-3.5 bg-background p-5 transition-colors hover:bg-surface"
+                className="group flex gap-3.5 border-line/20 bg-background p-5 transition-colors hover:bg-surface [&:nth-child(-n+2)]:border-b [&:nth-child(odd)]:border-r"
               >
                 <Icon className="mt-0.5 h-5 w-5 shrink-0 text-line transition-colors group-hover:text-accent" aria-hidden />
                 <span>

@@ -148,8 +148,9 @@ export function SiteHeader() {
             scrolled ? 'h-14' : 'h-[4.5rem]',
           )}
         >
-          <Link href="/" aria-label="EngTI RJ — página inicial" className="shrink-0">
+          <Link href="/" className="shrink-0">
             <Logo height={scrolled ? 32 : 38} variant="dark" />
+            <span className="sr-only"> — página inicial</span>
           </Link>
 
           <nav className="hidden items-center md:flex" aria-label="Navegação principal">

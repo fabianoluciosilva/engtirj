@@ -9,7 +9,7 @@ export default function robots(): MetadataRoute.Robots {
       {
         userAgent: '*',
         allow: '/',
-        disallow: ['/api/'],
+        disallow: ['/api/', '/admin'],
       },
       // Bots de IA — liberados para que possam citar o conteúdo (GEO).
       { userAgent: 'GPTBot', allow: '/' },

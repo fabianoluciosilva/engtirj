@@ -4,10 +4,15 @@ import { CtaWhatsApp } from '../CtaWhatsApp'
 export function Hero() {
   return (
     <section className="relative overflow-hidden border-b border-line/20">
-      <div className="container-page grid min-h-[calc(100svh-4.5rem)] items-center gap-10 py-14 lg:grid-cols-[minmax(0,5fr)_minmax(0,7fr)] lg:gap-6 lg:py-16">
+      <div className="container-page grid min-h-[calc(100svh-4.5rem)] items-center gap-10 py-14 lg:grid-cols-[minmax(0,6fr)_minmax(0,6fr)] lg:gap-6 lg:py-16">
         <div>
-          <h1 className="font-display text-[3.25rem] font-extrabold leading-[0.95] tracking-tight text-white sm:text-7xl lg:text-[5.25rem]">
-            TI para engenharia no Rio de Janeiro: o projeto abre rápido e a obra não fica sem rede.
+          <h1 className="font-display font-extrabold tracking-tight text-white">
+            <span className="block text-6xl leading-[0.92] sm:text-7xl lg:text-[4.25rem]">
+              TI para engenharia no Rio de Janeiro
+            </span>
+            <span className="mt-5 block max-w-md text-2xl font-bold leading-tight text-foreground sm:text-3xl">
+              O projeto abre rápido e a obra não fica sem rede.
+            </span>
           </h1>
 
           <p className="mt-6 max-w-md text-lg leading-relaxed text-muted-foreground">

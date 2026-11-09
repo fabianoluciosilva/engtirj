@@ -38,8 +38,7 @@ export function Logo({
         height={height}
         viewBox="0 0 48 48"
         fill="none"
-        role="img"
-        aria-label="EngTI RJ"
+        {...(showText ? { 'aria-hidden': true } : { role: 'img', 'aria-label': 'EngTI RJ' })}
         xmlns="http://www.w3.org/2000/svg"
         className="shrink-0"
       >
@@ -84,6 +83,7 @@ export function Logo({
             style={{ color: textColor, fontSize: height * 0.46 }}
           >
             Eng<span style={{ color: accent }}>TI</span> RJ
+            <span className="sr-only"> </span>
           </span>
           <span
             className="mt-1 font-medium uppercase"
