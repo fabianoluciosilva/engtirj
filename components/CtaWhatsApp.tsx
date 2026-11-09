@@ -4,8 +4,8 @@ import { whatsappUrl } from '@/lib/site'
 import { cn } from '@/lib/cn'
 
 /**
- * Par de CTAs (WhatsApp + âncora de seção), reutilizado no hero e nas faixas.
- * `message` permite personalizar a mensagem por seção mantendo a tag [engti].
+ * Par de CTAs (WhatsApp + âncora de seção). `message` personaliza a mensagem
+ * mantendo a tag [engti].
  */
 export function CtaWhatsApp({
   label = 'Solicitar diagnóstico de TI gratuito',

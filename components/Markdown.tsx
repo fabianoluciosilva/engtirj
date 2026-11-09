@@ -20,7 +20,7 @@ function escapeHtml(input: string): string {
 function inline(text: string): string {
   let out = escapeHtml(text)
   // código inline
-  out = out.replace(/`([^`]+)`/g, '<code class="rounded bg-muted px-1.5 py-0.5 text-sm">$1</code>')
+  out = out.replace(/`([^`]+)`/g, '<code class="rounded border border-border/60 bg-white/5 px-1.5 py-0.5 font-mono text-[0.85em] text-accent-soft">$1</code>')
   // negrito
   out = out.replace(/\*\*([^*]+)\*\*/g, '<strong>$1</strong>')
   // itálico
@@ -55,7 +55,7 @@ function renderMarkdown(markdown: string): string {
 
     if (/^---+$/.test(line.trim())) {
       closeList()
-      html.push('<hr class="my-8 border-border" />')
+      html.push('<hr class="my-8 border-border/60" />')
       continue
     }
 
@@ -79,7 +79,7 @@ function renderMarkdown(markdown: string): string {
     if (quote) {
       closeList()
       html.push(
-        `<blockquote class="my-4 border-l-4 border-accent/40 bg-muted/50 py-2 pl-4 italic text-muted-foreground">${inline(
+        `<blockquote class="my-4 border-l-4 border-accent/50 bg-accent/[0.06] py-2.5 pl-4 italic text-foreground/80">${inline(
           quote[1],
         )}</blockquote>`,
       )

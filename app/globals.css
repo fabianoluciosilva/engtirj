@@ -3,35 +3,39 @@
 @tailwind utilities;
 
 /*
- * Tokens semânticos — EngTI RJ.
- * Azul Industrial Deep (primary) + Laranja Construção (accent) sobre neutros
- * de concreto/prata. Formato "R G B" para permitir opacidade via Tailwind.
+ * Tokens semânticos — EngTI RJ (tema futurista dark).
+ * Base azul-industrial profundo + acento laranja-construção + ciano tecnológico.
+ * Formato "R G B" para permitir opacidade via Tailwind (bg-primary/10).
  */
 :root {
-  --radius: 0.625rem;
+  --radius: 0.75rem;
 
-  --background: 255 255 255;
-  --foreground: 15 23 42;
+  /* Fundo escuro futurista */
+  --background: 6 10 22;        /* #060A16 */
+  --foreground: 226 232 240;    /* #E2E8F0 */
 
-  /* Azul Engenharia / Industrial Deep */
-  --primary: 15 23 42; /* #0F172A */
+  /* Azul Engenharia / profundidade */
+  --primary: 15 23 42;          /* #0F172A */
   --primary-foreground: 248 250 252;
-  --primary-soft: 30 41 59;
+  --primary-soft: 30 41 59;     /* #1E293B */
 
-  /* Laranja Construção */
-  --accent: 234 88 12; /* #EA580C */
+  /* Laranja Construção (CTA) */
+  --accent: 249 115 22;         /* #F97316 */
   --accent-foreground: 255 247 237;
-  --accent-soft: 249 115 22; /* #F97316 */
+  --accent-soft: 251 146 60;    /* #FB923C */
 
-  /* Neutros — Cinza Concreto / Prata Metálico */
-  --muted: 241 245 249; /* #F1F5F9 */
-  --muted-foreground: 71 85 105;
-  --card: 255 255 255;
-  --card-foreground: 15 23 42;
+  /* Ciano tecnológico (glow secundário / detalhes) */
+  --cyan: 34 211 238;           /* #22D3EE */
 
-  --border: 226 232 240;
-  --ring: 234 88 12;
-  --steel: 148 163 184; /* #94A3B8 */
+  /* Superfícies */
+  --muted: 17 24 39;            /* #111827 */
+  --muted-foreground: 148 163 184;
+  --card: 13 19 33;             /* #0D1321 */
+  --card-foreground: 226 232 240;
+
+  --border: 45 55 79;           /* #2D374F */
+  --ring: 249 115 22;
+  --steel: 148 163 184;         /* #94A3B8 */
 }
 
 @layer base {
@@ -47,15 +51,20 @@
   body {
     @apply bg-background text-foreground antialiased;
     font-feature-settings: 'cv11', 'ss01';
+    background-color: rgb(var(--background));
+    /* Brilhos radiais de fundo que dão profundidade futurista */
+    background-image:
+      radial-gradient(60rem 40rem at 85% -10%, rgb(var(--accent) / 0.12), transparent 60%),
+      radial-gradient(50rem 40rem at 0% 20%, rgb(var(--cyan) / 0.08), transparent 55%),
+      radial-gradient(70rem 60rem at 50% 120%, rgb(var(--primary-soft) / 0.35), transparent 60%);
+    background-attachment: fixed;
   }
 
   ::selection {
-    @apply bg-accent/20 text-foreground;
+    @apply bg-accent/30 text-white;
   }
 
-  h1,
-  h2,
-  h3 {
+  h1, h2, h3 {
     @apply font-display;
     text-wrap: balance;
   }
@@ -63,19 +72,142 @@
   p {
     text-wrap: pretty;
   }
+
+  /* Barra de rolagem estilizada */
+  ::-webkit-scrollbar { width: 10px; height: 10px; }
+  ::-webkit-scrollbar-track { background: rgb(var(--background)); }
+  ::-webkit-scrollbar-thumb {
+    background: linear-gradient(180deg, rgb(var(--accent) / 0.6), rgb(var(--cyan) / 0.4));
+    border-radius: 999px;
+  }
 }
 
 @layer components {
-  /* Container padrão da landing */
   .container-page {
     @apply mx-auto w-full max-w-6xl px-5 sm:px-8;
   }
 
-  /* Trilha sutil de "grade de engenharia" usada em faixas de destaque */
+  /* Grade "de engenharia" com máscara de fade */
   .bg-engineering-grid {
     background-image:
-      linear-gradient(to right, rgb(var(--steel) / 0.12) 1px, transparent 1px),
-      linear-gradient(to bottom, rgb(var(--steel) / 0.12) 1px, transparent 1px);
-    background-size: 32px 32px;
+      linear-gradient(to right, rgb(var(--steel) / 0.10) 1px, transparent 1px),
+      linear-gradient(to bottom, rgb(var(--steel) / 0.10) 1px, transparent 1px);
+    background-size: 40px 40px;
+    -webkit-mask-image: radial-gradient(ellipse 80% 60% at 50% 40%, #000 40%, transparent 100%);
+            mask-image: radial-gradient(ellipse 80% 60% at 50% 40%, #000 40%, transparent 100%);
   }
+
+  /* Texto com gradiente */
+  .text-gradient {
+    @apply bg-clip-text text-transparent;
+    background-image: linear-gradient(100deg, rgb(var(--accent)) 0%, rgb(var(--accent-soft)) 40%, rgb(var(--cyan)) 100%);
+  }
+
+  /* Vidro (glassmorphism) */
+  .glass {
+    background: rgb(var(--card) / 0.55);
+    backdrop-filter: blur(14px) saturate(140%);
+    -webkit-backdrop-filter: blur(14px) saturate(140%);
+    border: 1px solid rgb(var(--border) / 0.8);
+  }
+
+  /* Card futurista com borda luminosa no hover */
+  .card-future {
+    @apply relative overflow-hidden rounded-2xl border border-border/70;
+    background:
+      linear-gradient(180deg, rgb(var(--card) / 0.9), rgb(var(--primary) / 0.6));
+    transition: transform .35s cubic-bezier(.2,.7,.2,1), border-color .35s, box-shadow .35s;
+    box-shadow: 0 1px 0 0 rgb(255 255 255 / 0.04) inset, 0 20px 40px -24px rgb(0 0 0 / 0.8);
+  }
+  .card-future::before {
+    /* linha de luz no topo */
+    content: "";
+    position: absolute;
+    inset: 0 0 auto 0;
+    height: 1px;
+    background: linear-gradient(90deg, transparent, rgb(var(--accent) / 0.7), rgb(var(--cyan) / 0.5), transparent);
+    opacity: .6;
+  }
+  .card-future:hover {
+    transform: translateY(-6px);
+    border-color: rgb(var(--accent) / 0.5);
+    box-shadow:
+      0 1px 0 0 rgb(255 255 255 / 0.06) inset,
+      0 0 0 1px rgb(var(--accent) / 0.15),
+      0 30px 60px -30px rgb(var(--accent) / 0.35);
+  }
+
+  /* Botão com brilho */
+  .btn-glow {
+    position: relative;
+    isolation: isolate;
+    box-shadow: 0 8px 30px -8px rgb(var(--accent) / 0.6), 0 0 0 1px rgb(var(--accent) / 0.3) inset;
+  }
+  .btn-glow::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    border-radius: inherit;
+    background: linear-gradient(120deg, rgb(var(--accent-soft)), rgb(var(--accent)));
+    z-index: -1;
+    opacity: 0;
+    transition: opacity .3s;
+  }
+  .btn-glow:hover::after { opacity: .9; }
+
+  /* Divisor luminoso */
+  .divider-glow {
+    height: 1px;
+    width: 100%;
+    background: linear-gradient(90deg, transparent, rgb(var(--border)), transparent);
+  }
+}
+
+@layer utilities {
+  /* Animação de entrada (reveal on scroll) */
+  .reveal {
+    opacity: 0;
+    transform: translateY(28px);
+    transition: opacity .7s cubic-bezier(.2,.7,.2,1), transform .7s cubic-bezier(.2,.7,.2,1);
+    will-change: opacity, transform;
+  }
+  .reveal.is-visible {
+    opacity: 1;
+    transform: none;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .reveal { opacity: 1 !important; transform: none !important; transition: none; }
+    html { scroll-behavior: auto; }
+  }
+
+  .animate-float { animation: float 6s ease-in-out infinite; }
+  .animate-pulse-glow { animation: pulseGlow 3.5s ease-in-out infinite; }
+  .animate-scan { animation: scan 4s linear infinite; }
+  .animate-grid-pan {
+    background-size: 40px 40px;
+    animation: gridPan 24s linear infinite;
+  }
+  .animate-marquee { animation: marquee 28s linear infinite; }
+}
+
+@keyframes float {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-12px); }
+}
+@keyframes pulseGlow {
+  0%, 100% { box-shadow: 0 0 0 0 rgb(var(--accent) / 0.4); }
+  50% { box-shadow: 0 0 24px 4px rgb(var(--accent) / 0.25); }
+}
+@keyframes scan {
+  0% { transform: translateY(-100%); }
+  100% { transform: translateY(400%); }
+}
+@keyframes gridPan {
+  0% { background-position: 0 0; }
+  100% { background-position: 40px 40px; }
+}
+@keyframes marquee {
+  0% { transform: translateX(0); }
+  100% { transform: translateX(-50%); }
 }

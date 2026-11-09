@@ -7,24 +7,25 @@ export function SiteFooter() {
   const year = new Date().getFullYear()
 
   return (
-    <footer className="mt-24 border-t border-border bg-primary text-primary-foreground">
-      <div className="container-page grid gap-10 py-14 md:grid-cols-4">
+    <footer className="relative mt-24 overflow-hidden border-t border-border/60">
+      <div className="pointer-events-none absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-accent/50 to-transparent" aria-hidden />
+      <div className="pointer-events-none absolute -bottom-40 left-1/2 h-80 w-[40rem] -translate-x-1/2 rounded-full bg-accent/[0.08] blur-[120px]" aria-hidden />
+
+      <div className="container-page relative grid gap-10 py-16 md:grid-cols-4">
         <div className="md:col-span-1">
           <Logo variant="dark" height={40} />
-          <p className="mt-4 max-w-xs text-sm text-primary-foreground/70">
+          <p className="mt-4 max-w-xs text-sm leading-relaxed text-muted-foreground">
             TI especializada, exclusivamente, para empresas de engenharia, arquitetura e construção
             civil no estado do Rio de Janeiro.
           </p>
         </div>
 
         <div>
-          <h3 className="text-sm font-semibold uppercase tracking-wide text-primary-foreground/90">
-            Serviços
-          </h3>
-          <ul className="mt-4 space-y-2.5 text-sm text-primary-foreground/70">
+          <h3 className="text-xs font-semibold uppercase tracking-wider text-white">Serviços</h3>
+          <ul className="mt-4 space-y-2.5 text-sm text-muted-foreground">
             {site.services.map((service) => (
               <li key={service.slug}>
-                <Link href="/#servicos" className="hover:text-accent-soft">
+                <Link href="/#servicos" className="transition-colors hover:text-accent">
                   {service.title}
                 </Link>
               </li>
@@ -33,63 +34,53 @@ export function SiteFooter() {
         </div>
 
         <div>
-          <h3 className="text-sm font-semibold uppercase tracking-wide text-primary-foreground/90">
-            Navegação
-          </h3>
-          <ul className="mt-4 space-y-2.5 text-sm text-primary-foreground/70">
-            <li><Link href="/#dores" className="hover:text-accent-soft">Desafios do setor</Link></li>
-            <li><Link href="/#servicos" className="hover:text-accent-soft">Serviços</Link></li>
-            <li><Link href="/#faq" className="hover:text-accent-soft">Perguntas frequentes</Link></li>
-            <li><Link href="/blog" className="hover:text-accent-soft">Blog</Link></li>
+          <h3 className="text-xs font-semibold uppercase tracking-wider text-white">Navegação</h3>
+          <ul className="mt-4 space-y-2.5 text-sm text-muted-foreground">
+            <li><Link href="/#dores" className="transition-colors hover:text-accent">Desafios do setor</Link></li>
+            <li><Link href="/#servicos" className="transition-colors hover:text-accent">Serviços</Link></li>
+            <li><Link href="/#faq" className="transition-colors hover:text-accent">Perguntas frequentes</Link></li>
+            <li><Link href="/blog" className="transition-colors hover:text-accent">Blog</Link></li>
           </ul>
         </div>
 
         <div>
-          <h3 className="text-sm font-semibold uppercase tracking-wide text-primary-foreground/90">
-            Contato
-          </h3>
-          <ul className="mt-4 space-y-3 text-sm text-primary-foreground/70">
+          <h3 className="text-xs font-semibold uppercase tracking-wider text-white">Contato</h3>
+          <ul className="mt-4 space-y-3 text-sm text-muted-foreground">
             <li>
               <a
                 href={whatsappUrl()}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="inline-flex items-center gap-2 hover:text-accent-soft"
+                className="inline-flex items-center gap-2 transition-colors hover:text-accent"
               >
-                <MessageCircle className="h-4 w-4 shrink-0" />
+                <MessageCircle className="h-4 w-4 shrink-0 text-accent" />
                 WhatsApp comercial
               </a>
             </li>
             <li className="inline-flex items-center gap-2">
               <Phone className="h-4 w-4 shrink-0" />
-              <a href={`tel:${site.phone.replace(/[^\d+]/g, '')}`} className="hover:text-accent-soft">
+              <a href={`tel:${site.phoneE164}`} className="transition-colors hover:text-accent">
                 {site.phone}
               </a>
             </li>
             <li className="inline-flex items-center gap-2">
               <Mail className="h-4 w-4 shrink-0" />
-              <a href={`mailto:${site.email}`} className="hover:text-accent-soft">
+              <a href={`mailto:${site.email}`} className="transition-colors hover:text-accent">
                 {site.email}
               </a>
             </li>
-            <li className="inline-flex items-center gap-2">
-              <MapPin className="h-4 w-4 shrink-0" />
-              <span>
-                {site.address.city} / {site.address.region} — atendimento em todo o RJ
-              </span>
+            <li className="flex items-start gap-2">
+              <MapPin className="mt-0.5 h-4 w-4 shrink-0" />
+              <span>{site.coverage}</span>
             </li>
           </ul>
         </div>
       </div>
 
-      <div className="border-t border-white/10">
-        <div className="container-page flex flex-col items-center justify-between gap-3 py-6 text-xs text-primary-foreground/60 sm:flex-row">
-          <p>
-            © {year} {site.legalName}. Todos os direitos reservados.
-          </p>
-          <p>
-            CNPJ e demais dados corporativos sob consulta · Atendimento no estado do Rio de Janeiro
-          </p>
+      <div className="border-t border-border/60">
+        <div className="container-page flex flex-col items-center justify-between gap-3 py-6 text-xs text-muted-foreground sm:flex-row">
+          <p>© {year} {site.legalName}. Todos os direitos reservados.</p>
+          <p>Atendimento no estado do Rio de Janeiro · Remoto e in-loco</p>
         </div>
       </div>
     </footer>

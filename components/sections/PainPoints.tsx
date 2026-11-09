@@ -1,4 +1,5 @@
-import { AlertTriangle, ArrowRight, CheckCircle2 } from 'lucide-react'
+import { AlertTriangle, ArrowRight, CheckCircle2, Zap } from 'lucide-react'
+import { Reveal } from '../Reveal'
 
 const items = [
   {
@@ -26,40 +27,44 @@ const items = [
 
 export function PainPoints() {
   return (
-    <section id="dores" className="scroll-mt-20 py-16 lg:py-24">
+    <section id="dores" className="relative scroll-mt-20 py-20 lg:py-28">
       <div className="container-page">
-        <div className="max-w-2xl">
-          <span className="text-sm font-semibold uppercase tracking-wide text-accent">
+        <Reveal className="max-w-2xl">
+          <span className="inline-flex items-center gap-2 rounded-full border border-border/70 bg-white/[0.03] px-3 py-1 text-xs font-semibold uppercase tracking-wider text-accent">
+            <Zap className="h-3.5 w-3.5" />
             Problema × Solução
           </span>
-          <h2 className="mt-2 font-display text-3xl font-bold tracking-tight text-foreground sm:text-4xl">
-            As dores reais de um escritório de engenharia
+          <h2 className="mt-4 font-display text-3xl font-bold tracking-tight text-white sm:text-4xl">
+            As dores reais de um{' '}
+            <span className="text-gradient">escritório de engenharia</span>
           </h2>
           <p className="mt-4 text-base leading-relaxed text-muted-foreground">
             Não é falta de tecnologia. É infraestrutura que não foi pensada para projetos pesados,
             arquivos críticos e equipes distribuídas entre escritório e obra.
           </p>
-        </div>
+        </Reveal>
 
-        <div className="mt-10 grid gap-6 md:grid-cols-3">
-          {items.map((item) => (
-            <article key={item.problem} className="flex flex-col rounded-xl border border-border bg-card p-6 shadow-card">
-              <div className="inline-flex items-center gap-2 text-xs font-semibold uppercase tracking-wide text-red-600">
-                <AlertTriangle className="h-4 w-4" />
-                A dor
-              </div>
-              <h3 className="mt-2 font-display text-lg font-semibold text-foreground">{item.problem}</h3>
-              <p className="mt-2 text-sm leading-relaxed text-muted-foreground">{item.description}</p>
+        <div className="mt-12 grid gap-6 md:grid-cols-3">
+          {items.map((item, i) => (
+            <Reveal key={item.problem} delay={i * 120}>
+              <article className="card-future group flex h-full flex-col p-6">
+                <div className="inline-flex items-center gap-2 text-xs font-semibold uppercase tracking-wider text-red-400">
+                  <AlertTriangle className="h-4 w-4" />
+                  A dor
+                </div>
+                <h3 className="mt-2 font-display text-lg font-semibold text-white">{item.problem}</h3>
+                <p className="mt-2 text-sm leading-relaxed text-muted-foreground">{item.description}</p>
 
-              <div className="my-4 flex items-center gap-2 text-xs font-semibold uppercase tracking-wide text-accent">
-                <ArrowRight className="h-4 w-4" />
-                A solução EngTI RJ
-              </div>
-              <div className="mt-auto flex gap-2 rounded-lg bg-accent/5 p-3">
-                <CheckCircle2 className="mt-0.5 h-4 w-4 shrink-0 text-accent" />
-                <p className="text-sm leading-relaxed text-foreground/90">{item.solution}</p>
-              </div>
-            </article>
+                <div className="my-4 flex items-center gap-2 text-xs font-semibold uppercase tracking-wider text-accent">
+                  <ArrowRight className="h-4 w-4" />
+                  A solução EngTI RJ
+                </div>
+                <div className="mt-auto flex gap-2 rounded-xl border border-accent/15 bg-accent/[0.06] p-3.5">
+                  <CheckCircle2 className="mt-0.5 h-4 w-4 shrink-0 text-accent" />
+                  <p className="text-sm leading-relaxed text-foreground/90">{item.solution}</p>
+                </div>
+              </article>
+            </Reveal>
           ))}
         </div>
       </div>

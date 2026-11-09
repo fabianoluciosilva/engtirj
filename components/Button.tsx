@@ -6,13 +6,16 @@ type Variant = 'primary' | 'accent' | 'outline' | 'ghost'
 type Size = 'sm' | 'md' | 'lg'
 
 const base =
-  'inline-flex items-center justify-center gap-2 rounded-lg font-semibold transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50'
+  'inline-flex items-center justify-center gap-2 rounded-lg font-semibold transition-all duration-300 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 focus-visible:ring-offset-background disabled:cursor-not-allowed disabled:opacity-50'
 
 const variants: Record<Variant, string> = {
-  primary: 'bg-primary text-primary-foreground hover:bg-primary-soft',
-  accent: 'bg-accent text-accent-foreground hover:bg-accent-soft',
-  outline: 'border border-border bg-background text-foreground hover:bg-muted',
-  ghost: 'text-foreground hover:bg-muted',
+  primary:
+    'bg-primary text-primary-foreground border border-white/10 hover:bg-primary-soft hover:-translate-y-0.5 shadow-lift',
+  accent:
+    'btn-glow bg-accent text-accent-foreground hover:-translate-y-0.5',
+  outline:
+    'border border-border bg-white/[0.02] text-foreground backdrop-blur-sm hover:border-accent/50 hover:bg-white/[0.06] hover:text-white',
+  ghost: 'text-foreground hover:bg-white/5',
 }
 
 const sizes: Record<Size, string> = {
@@ -35,7 +38,6 @@ export interface ButtonLinkProps extends ComponentProps<typeof Link> {
   size?: Size
 }
 
-/** Versão Link do botão — para navegação interna. */
 export function ButtonLink({ variant = 'primary', size = 'md', className, ...props }: ButtonLinkProps) {
   return <Link className={cn(base, variants[variant], sizes[size], className)} {...props} />
 }
@@ -45,7 +47,6 @@ export interface ButtonAnchorProps extends ComponentProps<'a'> {
   size?: Size
 }
 
-/** Versão <a> do botão — para links externos (WhatsApp, tel, mailto). */
 export function ButtonAnchor({ variant = 'accent', size = 'md', className, ...props }: ButtonAnchorProps) {
   return <a className={cn(base, variants[variant], sizes[size], className)} {...props} />
 }
