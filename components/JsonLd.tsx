@@ -152,7 +152,10 @@ export function blogPostingSchema(post: {
   title: string
   meta_description: string | null
   published_at: string | null
+  updated_at?: string | null
   cover_url: string | null
+  keywords?: string[]
+  reading_minutes?: number | null
 }): Node {
   const url = `${SITE_URL}/blog/${post.slug}`
   return {
@@ -161,9 +164,11 @@ export function blogPostingSchema(post: {
     mainEntityOfPage: { '@type': 'WebPage', '@id': url },
     headline: post.title,
     description: post.meta_description ?? undefined,
-    image: post.cover_url ?? LOGO_URL,
+    image: post.cover_url ?? `${url}/opengraph-image`,
     datePublished: post.published_at ?? undefined,
-    dateModified: post.published_at ?? undefined,
+    dateModified: post.updated_at ?? post.published_at ?? undefined,
+    keywords: post.keywords && post.keywords.length > 0 ? post.keywords.join(', ') : undefined,
+    timeRequired: post.reading_minutes ? `PT${post.reading_minutes}M` : undefined,
     url,
     author: { '@id': ORGANIZATION_ID },
     publisher: { '@id': ORGANIZATION_ID },

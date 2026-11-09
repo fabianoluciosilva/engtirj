@@ -111,3 +111,25 @@ export async function getPostsByCategories(categories: string[], limit = 3): Pro
   }
   return (data ?? []) as Post[]
 }
+
+/** Outros artigos da mesma categoria (ou os mais recentes, se não houver categoria). */
+export async function getRelatedPosts(post: Pick<Post, 'slug' | 'category'>, limit = 3): Promise<Post[]> {
+  const supabase = getPublicClient()
+  if (!supabase) return []
+
+  let query = supabase
+    .from('posts')
+    .select('*')
+    .eq('is_published', true)
+    .neq('slug', post.slug)
+    .order('published_at', { ascending: false, nullsFirst: false })
+    .limit(limit)
+  if (post.category) query = query.eq('category', post.category)
+
+  const { data, error } = await query
+  if (error) {
+    console.error('[posts] getRelatedPosts', error.message)
+    return []
+  }
+  return (data ?? []) as Post[]
+}
