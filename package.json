@@ -9,7 +9,9 @@
     "start": "next start -p 3002",
     "lint": "next lint",
     "type-check": "tsc --noEmit",
-    "db:seed": "tsx scripts/seed-posts.ts"
+    "db:seed": "tsx scripts/seed-posts.ts",
+    "test": "vitest run",
+    "test:watch": "vitest"
   },
   "dependencies": {
     "@supabase/supabase-js": "^2.38.0",
@@ -28,6 +30,7 @@
     "postcss": "^8.4.38",
     "tailwindcss": "^3.4.0",
     "tsx": "^4.19.0",
-    "typescript": "^5.0.0"
+    "typescript": "^5.0.0",
+    "vitest": "^2.1.9"
   }
 }
